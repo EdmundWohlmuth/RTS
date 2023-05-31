@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Refrences")]
     public static Camera mainCam;
     public static GameManager gameManager;
-    [Header("Lists")]
-    public static List<GameObject> selectedUnits = new List<GameObject>();
+
+    public List<GameObject> selectedUnits = new List<GameObject>();
 
     private void Awake()
     {

@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42c721ca5315224089f8826ef5506ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedUnits: []
 --- !u!4 &271463977
 Transform:
   m_ObjectHideFlags: 0
@@ -281,6 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 679512108}
+  - component: {fileID: 679512109}
   m_Layer: 0
   m_Name: CameraAnchor
   m_TagString: Untagged
@@ -304,6 +306,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &679512109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679512107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e586d18c1f1694b8a6f4db7778e739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!1 &688872587
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,7 +960,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1146021012
 GameObject:
@@ -1326,7 +1341,7 @@ Transform:
   - {fileID: 586786377}
   - {fileID: 1146021013}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1525032914
 GameObject:

@@ -23,7 +23,7 @@ public class CameraControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        newRotation = gameObject.transform.rotation;
+        newRotation = anchor.transform.localRotation;
     }
 
     // Update is called once per frame
@@ -55,45 +55,45 @@ public class CameraControl : MonoBehaviour
         forwardMove *= vertical;
 
         Vector3 move = verticalMove + horizontalMove + forwardMove;
-        anchor.transform.position += move;
+        anchor.transform.localPosition += move;
 
         // Camera Scroll
         if (Input.mouseScrollDelta.y != 0)
         {
             // SCROLL
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x,
-                                    gameObject.transform.position.y + Input.mouseScrollDelta.y,
-                                    gameObject.transform.position.z + Input.mouseScrollDelta.y);
+            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x,
+                                    gameObject.transform.localPosition.y + Input.mouseScrollDelta.y,
+                                    gameObject.transform.localPosition.z + Input.mouseScrollDelta.y);
             // CLAMPS
-            if (gameObject.transform.position.y > maxHeight)
+            if (gameObject.transform.localPosition.y > maxHeight)
             {
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x,
+                gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x,
                                                 maxHeight,
-                                                gameObject.transform.position.z - Input.mouseScrollDelta.y);
+                                                gameObject.transform.localPosition.z - Input.mouseScrollDelta.y);
             }
-            else if (gameObject.transform.position.y < minHeight)
+            else if (gameObject.transform.localPosition.y < minHeight)
             {
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x,
+                gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x,
                                                             minHeight,
-                                                            gameObject.transform.position.z - Input.mouseScrollDelta.y);
+                                                            gameObject.transform.localPosition.z - Input.mouseScrollDelta.y);
             }
         }
     }
-    void MouseControls() // BROKEN
+    void MouseControls() // Imperfect - Look into later
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(2))
         {
             rotateStartPos = Input.mousePosition;
         }
-        if (Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButton(2)) // else if avoids executing both conditions at the same time
         {
-            rotateCurrentPos = Input.mousePosition;
-            Vector3 differnce = rotateStartPos - rotateCurrentPos;
+            Vector3 rotateCurrentPos = Input.mousePosition;
+            Vector3 difference = rotateStartPos - rotateCurrentPos;
             rotateStartPos = rotateCurrentPos;
 
-            newRotation *= Quaternion.Euler(Vector3.up * (-differnce.x / 5f));
+            newRotation *= Quaternion.Euler(Vector3.up * (-difference.x / 5f));
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 1f);
+            anchor.transform.localRotation = newRotation;
         }
     }
 }

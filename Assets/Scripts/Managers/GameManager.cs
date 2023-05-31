@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Camera mainCam;
-    GameManager gameManager;
+    [Header("Refrences")]
+    public static Camera mainCam;
+    public static GameManager gameManager;
+    [Header("Lists")]
+    public static List<GameObject> selectedUnits = new List<GameObject>();
 
     private void Awake()
     {

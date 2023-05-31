@@ -6,8 +6,10 @@ public class CameraControl : MonoBehaviour
 {
     [Header("Refs")]
     public GameObject anchor;
+    public Camera cam;
 
     [Header("Variables")]
+    int controllable = 6;  // 6 is Layer "Controllable"
     [SerializeField] float speed;
     [SerializeField] float fastSpeed;
     [SerializeField] float zoomSpeed;
@@ -18,11 +20,11 @@ public class CameraControl : MonoBehaviour
     //rotation values
     Quaternion newRotation;
     Vector3 rotateStartPos;
-    Vector3 rotateCurrentPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        cam = gameObject.GetComponent<Camera>();
         newRotation = anchor.transform.localRotation;
     }
 
@@ -31,7 +33,7 @@ public class CameraControl : MonoBehaviour
     {
         KeyboardControls();
         MouseControls();
-
+        UnitSelection();
     }
 
     void KeyboardControls()
@@ -95,5 +97,40 @@ public class CameraControl : MonoBehaviour
 
             anchor.transform.localRotation = newRotation;
         }
+    }
+    void UnitSelection()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 1.5f;
+        mousePos = cam.ScreenToViewportPoint(mousePos);
+        mousePos.z = 0f;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.layer == controllable)
+            {
+                /*if (hit.collider.gameObject.transform.parent != null)
+                {
+                    Debug.Log(hit.collider.gameObject.transform.parent.name);
+                }
+                else Debug.Log(hit.collider.name);*/
+                if (Input.GetMouseButtonDown(0) && Input.GetKeyDown(KeyCode.LeftControl))
+                {
+                    GameManager.selectedUnits.Add(hit.collider.gameObject.transform.parent.gameObject);
+                    
+                }
+                else if (Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.LeftControl))
+                {
+                    GameManager.selectedUnits.Clear();
+                    //Debug.Log(hit.collider.gameObject.transform.parent.name);
+                }
+            }
+            else GameManager.selectedUnits.Clear();
+        }
+
     }
 }

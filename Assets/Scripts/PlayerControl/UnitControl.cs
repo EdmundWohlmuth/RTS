@@ -17,10 +17,7 @@ public class UnitControl : MonoBehaviour
     void Update()
     {
         UnitSelection();
-        /*if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            Debug.Log("left control pressed");
-        }*/
+        UnitOrders();
     }
 
     void UnitSelection()
@@ -59,6 +56,25 @@ public class UnitControl : MonoBehaviour
                 else Debug.Log(hit.collider.name);
             }
             else GameManager.gameManager.selectedUnits.Clear();
+        }
+    }
+
+    void UnitOrders()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.layer == 0 && GameManager.gameManager.selectedUnits.Count > 0)           
+            {
+                foreach (var item in GameManager.gameManager.selectedUnits)
+                {
+                    Debug.Log(item.name + " move to " + hit.point);
+                }
+                
+            }
+
         }
 
     }

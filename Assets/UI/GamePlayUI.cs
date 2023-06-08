@@ -5,6 +5,10 @@ using UnityEngine.UIElements;
 
 public class GamePlayUI : MonoBehaviour
 {
+    public UnitControl unitController;
+
+    // I'll want to do a check to se if the player has anything selected to make the cuttons clickable
+
     private void OnEnable()
     {
         VisualElement element = GetComponent<UIDocument>().rootVisualElement;
@@ -14,6 +18,9 @@ public class GamePlayUI : MonoBehaviour
         Button buttonSquare = element.Q<Button>("ButtonSquare");
         Button buttonMerge = element.Q<Button>("ButtonMerge");
 
-        // buttonFormation.clicked += () => //Put Meathod Here\\
+        buttonFormation.clicked += () => unitController.ToggleFormation();
+        buttonSetFire.clicked += () => unitController.SetFiringRanges();
+        buttonSquare.clicked += () => unitController.Square();
+        buttonMerge.clicked += () => unitController.MergeUnits();
     }
 }

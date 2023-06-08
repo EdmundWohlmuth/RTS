@@ -24,5 +24,8 @@ public class FieldOfViewEditor : Editor
         {
             Handles.DrawLine(fow.transform.position, visableTarget.position);
         }
+
+        Handles.color = Color.blue;
+        Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, 30);
     }
 }

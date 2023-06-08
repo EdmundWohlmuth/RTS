@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    /*public float maxViewRadius;
+    public float lForestViewRadius;
+    public float hForestViewRadius;
+    public float minSightPen;
+    public float lForestSightPen;
+    public float hForestSightPen;*/
+
     public float viewRadius;
     public float viewAngle;
+    //public float sightPen;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -83,11 +91,26 @@ public class FieldOfView : MonoBehaviour
         Vector3[] verticies = new Vector3[vertexCount];
         int[] triangles = new int[(vertexCount - 2) * 3];
 
-        verticies[0] = Vector3.zero;
+        verticies[0] = Vector3.zero; 
+        //RaycastHit hit;
         for (int i = 0; i < vertexCount - 1; i++)
         {
-            verticies[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+            /*Ray ray = new Ray(transform.position, verticies[i + 1]);
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("huh");
+                if (hit.collider.gameObject.layer == 10)
+                {
+                    sightPen = hForestSightPen;
+                }
+                else if (hit.collider.gameObject.layer == 11)
+                {
+                    sightPen = lForestSightPen;
+                }
+                else sightPen = minSightPen;
+            }*/
 
+            verticies[i + 1] = transform.InverseTransformPoint(viewPoints[i]); // + Vector3.forward * sightPen
             if (i < vertexCount - 2)
             {              
                 triangles[i * 3] = 0;

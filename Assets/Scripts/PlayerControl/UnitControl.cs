@@ -78,4 +78,23 @@ public class UnitControl : MonoBehaviour
         }
 
     }
+
+    //-UI-INTERACTIONS-
+    public void ToggleFormation()
+    {
+        Debug.Log("Toggle Formation");
+    }
+
+    public void SetFiringRanges()
+    {
+        Debug.Log("Set Range");
+    }
+    public void Square()
+    {
+        Debug.Log("Square Up");
+    }
+    public void MergeUnits()
+    {
+        Debug.Log("Merge Units");
+    }
 }

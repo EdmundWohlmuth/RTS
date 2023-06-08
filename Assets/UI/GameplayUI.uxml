@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/StyleSheet.uss?fileID=7433441132597879392&amp;guid=5471aa212e8c0a240bfa9967aca55e7e&amp;type=3#StyleSheet" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 86, 185, 0.53); margin-left: 5%; margin-right: 5%; margin-top: 45%; margin-bottom: 0; flex-direction: row; justify-content: center; max-width: 100%; max-height: 150px; height: auto; width: auto; border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; min-height: auto; min-width: auto; bottom: -5%;">
+            <ui:Button text="Toggle Formation" display-tooltip-when-elided="true" name="ButtonFormation" class="button" />
+            <ui:Button text="Set Firing Ranges" display-tooltip-when-elided="true" name="ButtonSetFire" class="button" style="flex-direction: row;" />
+            <ui:Button text="Square" display-tooltip-when-elided="true" name="ButtonSquare" class="button" />
+            <ui:Button text="Merge Units" display-tooltip-when-elided="true" name="ButtonMerge" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

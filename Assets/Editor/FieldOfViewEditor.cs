@@ -20,7 +20,7 @@ public class FieldOfViewEditor : Editor
         Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.viewRadius);
 
         Handles.color = Color.red;
-        foreach (Transform visableTarget in fow.visableTargets)
+        foreach (Transform visableTarget in GameManager.gameManager.visableTargets)
         {
             Handles.DrawLine(fow.transform.position, visableTarget.position);
         }

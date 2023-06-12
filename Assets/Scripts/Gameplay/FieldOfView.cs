@@ -16,9 +16,7 @@ public class FieldOfView : MonoBehaviour
     //public float sightPen;
 
     public LayerMask targetMask;
-    public LayerMask obstacleMask;
-
-    public List<Transform> visableTargets = new List<Transform>();
+    public LayerMask obstacleMask; 
 
     public int edgeResolveIterations;
     public float edgeDistanceThreshold;
@@ -30,6 +28,9 @@ public class FieldOfView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FieldOfView fov = gameObject.GetComponent<FieldOfView>();
+        if (gameObject.layer != 6) fov.enabled = false;
+
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -170,7 +171,7 @@ public class FieldOfView : MonoBehaviour
 
     void FindVisableTargets()
     {
-        visableTargets.Clear();
+        GameManager.gameManager.visableTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -182,7 +183,7 @@ public class FieldOfView : MonoBehaviour
                 float disToTarget = Vector3.Distance(transform.position, target.position);
                 if (!Physics.Raycast(transform.position, dirToTarget, disToTarget, obstacleMask))
                 {
-                    visableTargets.Add(target);
+                    GameManager.gameManager.visableTargets.Add(target);
                 }
             }
         }

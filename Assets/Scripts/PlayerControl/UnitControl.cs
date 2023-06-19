@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitControl : MonoBehaviour
 {
@@ -55,8 +56,20 @@ public class UnitControl : MonoBehaviour
                 }
                 else Debug.Log(hit.collider.name);
             }
-            else GameManager.gameManager.selectedUnits.Clear();
+            else if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                if (hit.collider.gameObject.layer == 0)
+                {
+                    GameManager.gameManager.selectedUnits.Clear();
+                }          
+            }
+           
         }
+    }
+
+    bool isMouseOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     void UnitOrders()
@@ -80,9 +93,42 @@ public class UnitControl : MonoBehaviour
     }
 
     //-UI-INTERACTIONS-
-    public void ToggleFormation()
+    public void ToggleFormation() // MIGHT GET MOVED TO A METHOD IN INFANTRY.CS
     {
+        int unitNum = 0;
+
         Debug.Log("Toggle Formation");
+        if (GameManager.gameManager.selectedUnits.Count > 0)
+        {
+            foreach (GameObject unit in GameManager.gameManager.selectedUnits)
+            {
+                foreach (Transform halfBattalion in unit.transform)
+                {
+                    if (unit.GetComponent<Infantry>())
+                    {
+                        if (unit.GetComponent<Infantry>().isInLine)
+                        {
+                            halfBattalion.transform.localScale = new Vector3(unit.GetComponent<Infantry>().marchingScaleX, 0.5f,
+                                                                            unit.GetComponent<Infantry>().marchingScaleZ);
+                            if (unitNum == 0)
+                            {
+
+                            }
+                        }
+                        else
+                        {
+                            halfBattalion.transform.localScale = new Vector3(unit.GetComponent<Infantry>().lineScaleX, 0.5f,
+                                                                            unit.GetComponent<Infantry>().lineScaleZ);
+                        }
+                        
+                    }
+                }
+                // SET STATE
+                if (unit.GetComponent<Infantry>().isInLine) unit.GetComponent<Infantry>().isInLine = false;
+                else unit.GetComponent<Infantry>().isInLine = true;
+
+            }
+        }
     }
 
     public void SetFiringRanges()

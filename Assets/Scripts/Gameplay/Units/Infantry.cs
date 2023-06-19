@@ -9,6 +9,13 @@ public class Infantry : MonoBehaviour
     public bool isSelected;
     public bool isVisable;
 
+    public bool isInLine;
+
+    public float marchingScaleX = 2;
+    public float marchingScaleZ = 4;
+    public float lineScaleX = 4;
+    public float lineScaleZ = 2;
+
     private void Awake()
     {
 
@@ -16,6 +23,8 @@ public class Infantry : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isInLine = true;
+
         foreach (Transform i in gameObject.transform)
         {
             if (i.gameObject.layer != 20) // 20 is an Ignore Layer

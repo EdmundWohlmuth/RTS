@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Commander : MonoBehaviour
+public class Commander : Unit
 {
     int controllableInt = 6;
 

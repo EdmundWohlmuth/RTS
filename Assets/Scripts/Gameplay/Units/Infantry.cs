@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Infantry : MonoBehaviour
+public class Infantry : Unit
 {
     int controllableInt = 6;
 
@@ -73,8 +73,14 @@ public class Infantry : MonoBehaviour
             {
                 i.gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
-            
+
             //i.gameObject.GetComponentInChildren<BoxCollider>().enabled = false;
         }
     }
+
+    public void MoveMe(Vector3 PosToMoveTo)
+    {
+        agent.SetDestination(PosToMoveTo);
+    }
+
 }

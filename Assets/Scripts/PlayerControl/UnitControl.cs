@@ -37,13 +37,13 @@ public class UnitControl : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log("Multi-Select");
+                    //Debug.Log("Multi-Select");
                     if (hit.collider.gameObject.transform.parent != null) GameManager.gameManager.selectedUnits.Add(hit.collider.gameObject.transform.parent.gameObject);
                     else GameManager.gameManager.selectedUnits.Add(hit.collider.gameObject);
                 }
                 else if (Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.LeftControl))
                 {
-                    Debug.Log("Single Select");
+                    //Debug.Log("Single Select");
                     GameManager.gameManager.selectedUnits.Clear();
                     if (hit.collider.gameObject.transform.parent != null) GameManager.gameManager.selectedUnits.Add(hit.collider.gameObject.transform.parent.gameObject);
                     else GameManager.gameManager.selectedUnits.Add(hit.collider.gameObject);
@@ -74,6 +74,9 @@ public class UnitControl : MonoBehaviour
 
     void UnitOrders()
     {
+        int unitCount = 0;
+        float unitPosOffset = 4.5f; // OFFSET NEEDS TO INCREASE BY .5 WHENEVER IT DOES INCREASE
+
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -81,9 +84,40 @@ public class UnitControl : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.layer == 0 && GameManager.gameManager.selectedUnits.Count > 0)           
             {
-                foreach (var item in GameManager.gameManager.selectedUnits)
+                foreach (GameObject unit in GameManager.gameManager.selectedUnits)
                 {
-                    Debug.Log(item.name + " move to " + hit.point);
+                    if (!unit.GetComponent<Infantry>()) // OTHER MOVEMENT
+                    {
+                        float unitPosOffsetZ = 4.5f; // NOT DONE YET, HAVE IT PLACE BEHIND LINE
+                        Debug.Log(unit.name + " is not infantry");
+                    }
+                    else if (!unit.GetComponent<Infantry>().isInLine) // COLUNM MOVEMENT
+                    {
+                        Debug.Log(unit.name + " move to " + new Vector3(hit.point.x, hit.point.y, hit.point.z - unitPosOffset));
+
+                        unitCount++;
+                        unitPosOffset += 5f;
+                    }
+                    else // LINE MOVEMENT
+                    {
+                        if (unitCount % 2 == 0)
+                        {
+                            //left // TEMP, DOESN'T ACCOUNT FOR ROTATION
+                            Debug.Log(unit.name + " move to " + new Vector3(hit.point.x + unitPosOffset, hit.point.y, hit.point.z));
+                            unit.GetComponent<Infantry>().MoveMe(new Vector3(hit.point.x + unitPosOffset, hit.point.y, hit.point.z));
+                        }
+                        else
+                        {
+                            //right // TEMP, DOESN'T ACCOUNT FOR ROTATION     
+                            Debug.Log(unit.name + " move to " + new Vector3(hit.point.x + unitPosOffset * -1, hit.point.y, hit.point.z));
+                            unit.GetComponent<Infantry>().MoveMe(new Vector3(hit.point.x + unitPosOffset * -1, hit.point.y, hit.point.z));
+                        }
+
+                        unitCount++;
+                        if (unitCount % 2 == 0) unitPosOffset += 9f;
+                    }
+
+                    //Debug.Log(item.name + " move to " + hit.point);
                 }
                 
             }
@@ -96,6 +130,7 @@ public class UnitControl : MonoBehaviour
     public void ToggleFormation() // MIGHT GET MOVED TO A METHOD IN INFANTRY.CS
     {
         int unitNum = 0;
+        float unitPosOffset = 4.5f;
 
         Debug.Log("Toggle Formation");
         if (GameManager.gameManager.selectedUnits.Count > 0)
@@ -112,7 +147,7 @@ public class UnitControl : MonoBehaviour
                                                                             unit.GetComponent<Infantry>().marchingScaleZ);
                             if (unitNum == 0)
                             {
-
+                                // for position, I think?
                             }
                         }
                         else
